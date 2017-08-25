@@ -1,11 +1,12 @@
 class CommentsController < ApplicationController
-  http_basic_authenticate_with name: "cgh", password: "wubba lubba dub dub",
-  only: :destroy
 
   def create
     @article = Article.find(params[:article_id])
-    @comment = @article.comments.create(comment_params)
-    redirect_to article_path(@article)
+    @comment = @article.comments.new(comment_params)
+    @comment.save
+
+    # binding.pry
+    render  'articles/show'
   end
 
   def destroy
@@ -17,6 +18,6 @@ class CommentsController < ApplicationController
 
   private
     def comment_params
-      params.require(:comment).permit(:commenter, :body)
+      params.require(:comment).permit(:commenter, :body, :user_id)
     end
 end

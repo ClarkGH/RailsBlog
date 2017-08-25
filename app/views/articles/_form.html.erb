@@ -14,6 +14,11 @@
   <% end %>
 
   <p>
+    <%= label_tag :users %>
+    <%= f.select :user_id, options_for_select(User.pluck( :name, :id )) %>
+  </p>
+
+  <p>
     <%= f.label :title %>
     <%= f.text_field :title %>
   </p>
